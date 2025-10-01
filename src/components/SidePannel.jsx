@@ -43,14 +43,14 @@ function SidePannel() {
 
   return (
     <>
-      <div className="md:hidden h-screen flex items-start p-4 dark:bg-gray-900 ">
+      <div className="md:hidden h-screen flex items-start p-4 dark:bg-[#000000] dark:text-white ">
         <button onClick={() => setOpen(!open)}>
           <PanelLeft size={28} />
         </button>
       </div>
       <div
         className={`
-          fixed top-0 z-50 left-0 h-full w-60 p-6 bg-white dark:bg-gray-900 
+          fixed top-0 z-50 left-0 h-full w-60 p-6 bg-white dark:bg-[#000000] dark:text-white
           transform transition-transform duration-300 ease-in-out
           md:translate-x-0
           ${open ? "translate-x-0" : "-translate-x-full"}
@@ -61,7 +61,7 @@ function SidePannel() {
           <CircleX size={25} />
         </button>
         <h2 className="text-2xl font-bold mb-8">FinanceTracker</h2>
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4 w-full ">
           {options.map((option) => (
             <NavLink
               key={option.id}

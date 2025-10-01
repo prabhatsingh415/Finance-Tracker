@@ -59,7 +59,7 @@ function Dashboard() {
   }));
 
   return (
-    <div className="flex flex-col justify-center items-center gap-10 p-4 md:p-8">
+    <div className="flex flex-col justify-center items-center bg-white dark:bg-[#000000] dark:text-white gap-10 p-4 md:p-8 dark:border-l border-white">
       <div className="w-full flex flex-col justify-start items-start">
         <h1 className="text-3xl font-semibold mb-1">Dashboard</h1>
         <p className="text-gray-500 text-sm md:text-md">
@@ -67,7 +67,7 @@ function Dashboard() {
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-around items-center gap-6">
+      <div className="flex flex-col md:flex-row justify-around items-center gap-6 ">
         {data.map(({ id, title, value, color }) => (
           <div
             key={id}
@@ -85,23 +85,23 @@ function Dashboard() {
           </div>
         ))}
       </div>
-      <div className="w-full flex justify-center items-center border border-gray-300 rounded-2xl p-2">
+      <div className="w-full flex justify-center items-center border border-gray-300 rounded-2xl p-2 ">
         <ExpensePieChart data={expenseData} />
       </div>
 
-      <div className="w-full flex flex-col justify-center items-center gap-4 border border-gray-300 p-4 rounded-2xl">
+      <div className="w-full flex flex-col justify-center items-center gap-4 border border-gray-300 p-4 rounded-2xl ">
         {sortedTransactions.map((transaction) => (
           <div
             key={transaction.id}
             className="w-full flex items-center justify-between p-2 rounded-2xl bg-[#f5f5f7]"
           >
-            <div className="flex items-center gap-4">
+            <div className="flex w-full items-center gap-4 ">
               <span
                 className={`h-3 w-3 rounded-full ml-2 ${
                   transaction.type === "expense" ? "bg-red-500" : "bg-green-500"
                 }`}
               />
-              <div className="flex flex-col justify-center items-start gap-1">
+              <div className="flex flex-col justify-center items-start gap-1 ">
                 <span className="font-bold">{transaction.description}</span>
                 <span className="font-light">{transaction.category}</span>
               </div>
