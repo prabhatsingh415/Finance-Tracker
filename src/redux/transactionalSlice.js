@@ -73,10 +73,18 @@ const transactionsSlice = createSlice({
     deleteTransaction: (state, action) => {
       state.list = state.list.filter((t) => t.id !== action.payload);
     },
+    clearTransactions: (state) => {
+      state.list = [];
+      localStorage.removeItem("transactions"); // clear localStorage too
+    },
   },
 });
 
-export const { addTransaction, editTransaction, deleteTransaction } =
-  transactionsSlice.actions;
+export const {
+  addTransaction,
+  editTransaction,
+  deleteTransaction,
+  clearTransactions,
+} = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;

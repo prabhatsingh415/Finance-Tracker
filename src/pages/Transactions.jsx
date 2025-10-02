@@ -1,7 +1,10 @@
 import React from "react";
 
 function Transactions() {
-  return <div>Transactions Page</div>;
+  return <div>
+    <div></div>
+    
+  </div>;
 }
 
 export default Transactions;

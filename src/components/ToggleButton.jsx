@@ -1,32 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
-function ToggleButton({
-  enabled,
-  setEnabled,
-  width = 56,
-  height = 28,
-  circleSize = 20,
-  onColor = "bg-blue-500",
-  offColor = "bg-gray-300",
-}) {
+export default function ToggleButton() {
+  const [enabled, setEnabled] = useState(false);
+
   return (
-    <div
+    <button
+      type="button"
       onClick={() => setEnabled(!enabled)}
-      style={{ width: width, height: height }}
-      className={`flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ${
-        enabled ? onColor : offColor
+      className={`relative inline-flex h-7 w-14 shrink-0 cursor-pointer rounded-full transition-colors duration-200 focus:outline-none ${
+        enabled ? "bg-green-400" : "bg-gray-300"
       }`}
     >
-      <div
-        style={{
-          width: circleSize,
-          height: circleSize,
-          transform: `translateX(${enabled ? width - circleSize - 2 : 0}px)`,
-        }}
-        className="bg-white rounded-full shadow-md transition-transform duration-300"
-      ></div>
-    </div>
+      <span className="sr-only">Toggle appearance</span>
+      <span
+        aria-hidden="true"
+        className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow ring-0 transition-transform duration-200 ${
+          enabled ? "translate-x-7" : "translate-x-0"
+        }`}
+      />
+    </button>
   );
 }
-
-export default ToggleButton;
