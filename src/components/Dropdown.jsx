@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function Dropdown({
-  label,
   options = [],
   value,
   onChange,
@@ -9,12 +8,7 @@ export default function Dropdown({
   className = "",
 }) {
   return (
-    <div className="flex items-center gap-2 w-fit">
-      {label && (
-        <label className="hidden lg:block text-sm font-medium text-gray-700 dark:text-gray-200 mr-2">
-          {label}
-        </label>
-      )}
+    <div className="`flex items-center gap-2 w-full ">
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}

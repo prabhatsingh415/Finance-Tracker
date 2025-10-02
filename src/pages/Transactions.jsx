@@ -97,36 +97,38 @@ function Transactions() {
       </div>
 
       <div className="w-full flex flex-col items-start gap-4 border border-gray-300 rounded-2xl p-4">
-        <span className="w-full flex justify-center items-center ml-4">
+        <span className="w-full flex items-center text-base font-semibold mb-1">
           <span className="mr-2">
-            <Filter size={20} />{" "}
+            <Filter size={20} />
           </span>
           Filters
         </span>
-        <div className="w-full flex flex-col sm:flex-row items-center gap-4 mt-4 ml-4">
-          <div className="relative w-full max-w-xs">
+        <div className="w-full flex flex-col gap-3 md:flex-row md:gap-4 md:items-center mt-2">
+          <div className="relative w-full md:w-1/3">
             <input
               type="text"
-              placeholder="Search..."
-              className="pl-12 p-2 w-full rounded-lg min-w-[200px] border border-gray-300 dark:border-gray-700 bg-[#f5f5f7] dark:bg-zinc-900 text-gray-800 dark:text-gray-100 shadow focus:outline-none focus:ring-2 focus:ring-teal-200 transition"
+              placeholder="Search transactions..."
+              className="pl-10 p-2 w-full rounded-lg border-0 bg-[#f5f5f7] dark:bg-zinc-900 text-gray-800 dark:text-gray-100 shadow focus:outline-none focus:ring-2 focus:ring-teal-200 transition"
             />
             <Search
               size={18}
-              className=" absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500"
             />
           </div>
-          <Dropdown
-            label="Category"
-            placeholder="All"
-            options={categories}
-            className="w-full bg-[#f5f5f7] border-0 shadow rounded-xl min-w-[180px]"
-          />
-          <Dropdown
-            label="Type"
-            placeholder="All"
-            options={types}
-            className="bg-[#f5f5f7] border-0 shadow rounded-xl min-w-[180px]"
-          />
+          <div className="w-full md:w-1/3">
+            <Dropdown
+              placeholder="All"
+              options={categories}
+              className="w-full bg-[#f5f5f7] border-0 shadow rounded-xl"
+            />
+          </div>
+          <div className="w-full md:w-1/3">
+            <Dropdown
+              placeholder="All"
+              options={types}
+              className="w-full bg-[#f5f5f7] border-0 shadow rounded-xl"
+            />
+          </div>
         </div>
       </div>
 
