@@ -17,7 +17,7 @@ import {
 import CurrencyType from "../components/CurrencyType";
 import { useCurrencyConverter } from "../hooks/useCurrencyConverter";
 
-function Transactions() {
+function Transactions({ open, setOpen }) {
   const baseCurrency = useSelector((state) => state.currency.base);
   const convert = useCurrencyConverter();
 
@@ -42,7 +42,6 @@ function Transactions() {
     (a, b) => new Date(b.date) - new Date(a.date)
   );
 
-  const [open, setOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
 
   const formRef = useRef(null);
