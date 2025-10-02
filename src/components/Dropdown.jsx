@@ -11,7 +11,7 @@ export default function Dropdown({
   return (
     <div className="flex items-center gap-2 w-fit">
       {label && (
-        <label className="text-sm font-medium text-gray-700 dark:text-gray-200 mr-2">
+        <label className="hidden lg:block text-sm font-medium text-gray-700 dark:text-gray-200 mr-2">
           {label}
         </label>
       )}

@@ -43,7 +43,7 @@ function SidePannel() {
 
   return (
     <>
-      <div className="md:hidden h-screen flex items-start p-4 dark:bg-[#000000] dark:text-white ">
+      <div className="md:hidden h-fit flex items-start p-4 dark:bg-[#000000] dark:text-white ">
         <button onClick={() => setOpen(!open)}>
           <PanelLeft size={28} />
         </button>
