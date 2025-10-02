@@ -131,18 +131,17 @@ function Transactions() {
       </div>
 
       {/* Transactions List */}
-      <div className="w-full flex flex-col justify-center items-center gap-4 border border-gray-300 p-4 rounded-2xl ">
-        <div className="w-full flex justify-start items-start gap-2">
-          <h1 className="text-md mb-1">Transactions</h1>
-          <span>{`(${size})`}</span>
-        </div>
-        <div className="w-full flex flex-col gap-4 border border-gray-300 p-4 rounded-2xl">
+      <div className="w-full flex justify-center">
+        <div className="w-full max-w-md md:max-w-none flex flex-col gap-3 border border-gray-300 rounded-2xl p-4 bg-white dark:bg-[#18181b]">
+          <span className="font-semibold text-base mb-2 ml-1">
+            Transactions ({size})
+          </span>
           {sortedTransactions.map((transaction) => (
             <div
               key={transaction.id}
-              className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-4 rounded-2xl  bg-white border  dark:bg-[#000000] dark:text-white border-gray-100 shadow-sm hover:shadow transition"
+              className="w-full flex flex-col md:flex-row md:items-center justify-between gap-2 p-3 md:p-4 rounded-xl bg-[#f5f5f7] dark:bg-zinc-900 shadow-sm border border-gray-200"
             >
-              <div className="flex items-center gap-3 min-w-0">
+              <div className="flex items-center gap-3 min-w-0 md:w-1/2">
                 <span
                   className={`h-3 w-3 rounded-full ${
                     transaction.type === "expense"
@@ -150,11 +149,11 @@ function Transactions() {
                       : "bg-green-500"
                   }`}
                 />
-                <div className="w-full flex flex-col min-w-0">
+                <div className="flex flex-col min-w-0">
                   <span className="font-semibold text-base truncate">
                     {transaction.description}
                   </span>
-                  <div className="w-full flex items-center gap-2 mt-1">
+                  <div className="flex items-center gap-2 mt-1">
                     <span className="px-2 py-0.5 rounded-lg bg-gray-100 text-xs font-medium text-gray-700">
                       {transaction.category}
                     </span>
@@ -162,14 +161,16 @@ function Transactions() {
                       {transaction.date}
                     </span>
                   </div>
-                  <span className="text-sm text-gray-500 mt-1">
-                    {transaction.note || ""}
-                  </span>
+                  {transaction.note && (
+                    <span className="text-xs text-gray-500 mt-1 truncate">
+                      {transaction.note}
+                    </span>
+                  )}
                 </div>
               </div>
-              <div className="w-full flex items-center gap-4 mt-2 sm:mt-0">
+              <div className="flex items-center gap-4 md:w-1/2 md:justify-end mt-2 md:mt-0">
                 <span
-                  className={`font-semibold text-lg ${
+                  className={`font-bold text-base md:text-lg ${
                     transaction.type === "expense"
                       ? "text-red-500"
                       : "text-green-600"
