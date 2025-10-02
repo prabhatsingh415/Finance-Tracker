@@ -1,15 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [
-  // demo entry (optional, testing ke liye)
-  { category: "food", budget: 1400 },
-];
+const initialState = [{ category: "food & dining", budget: 1400 }];
 
 const budgetSlice = createSlice({
   name: "budget",
   initialState,
   reducers: {
-    setBudget: (state, action) => {
+    addBudget: (state, action) => {
       state.push(action.payload);
     },
     updateBudget: (state, action) => {
@@ -26,6 +23,6 @@ const budgetSlice = createSlice({
   },
 });
 
-export const { setBudget, updateBudget, deleteBudget } = budgetSlice.actions;
+export const { addBudget, updateBudget, deleteBudget } = budgetSlice.actions;
 
 export default budgetSlice.reducer;

@@ -59,6 +59,13 @@ function Dashboard() {
 
   return (
     <div className="flex flex-col justify-center items-center bg-white dark:bg-[#000000] dark:text-white gap-10 p-4 md:p-8 w-full max-w-4xl mx-auto dark:border-l overflow-x-hidden">
+      <div className="w-full flex flex-col justify-start items-start">
+        <h1 className="text-3xl font-semibold mb-1">Dashboard</h1>
+        <p className="text-gray-500 text-sm md:text-md">
+          Welcome back! Here's your financial overview
+        </p>
+      </div>
+
       {/* ...Dashboard Header... */}
       <div className="flex flex-col lg:flex-row justify-around items-center gap-6 w-full">
         {data.map(({ id, title, value, color }) => (

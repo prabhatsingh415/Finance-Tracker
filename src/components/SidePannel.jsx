@@ -27,14 +27,9 @@ function SidePannel() {
       title: "Budget Goals",
       path: "/budget-goals",
     },
+
     {
       id: 4,
-      icon: <TrendingUp size={20} />,
-      title: "Insights",
-      path: "/insights",
-    },
-    {
-      id: 5,
       icon: <Settings size={20} />,
       title: "Settings",
       path: "/settings",

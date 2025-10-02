@@ -4,7 +4,6 @@ import SidePannel from "./components/SidePannel";
 import Dashboard from "./pages/Dashboard.jsx";
 import Transactions from "./pages/Transactions.jsx";
 import BudgetGoals from "./pages/BudgetGoals.jsx";
-import Insights from "./pages/Insights.jsx";
 import Settings from "./pages/Settings.jsx";
 import { Plus } from "lucide-react";
 
@@ -27,7 +26,6 @@ function App() {
             }
           />
           <Route path="/budget-goals" element={<BudgetGoals />} />
-          <Route path="/insights" element={<Insights />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
