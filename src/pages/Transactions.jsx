@@ -5,7 +5,6 @@ import {
   SquarePen,
   Plus,
   Calendar,
-  IndianRupee,
 } from "lucide-react";
 import React, { useRef, useState } from "react";
 import Dropdown from "../components/Dropdown";
@@ -15,8 +14,13 @@ import {
   editTransaction,
   deleteTransaction,
 } from "../redux/transactionalSlice";
+import CurrencyType from "../components/CurrencyType";
+import { useCurrencyConverter } from "../hooks/useCurrencyConverter";
 
 function Transactions() {
+  const baseCurrency = useSelector((state) => state.currency.base);
+  const convert = useCurrencyConverter();
+
   const categories = [
     "Food & Dining",
     "Transportation",
@@ -89,7 +93,7 @@ function Transactions() {
             setEditingTransaction(null);
             setOpen(true);
           }}
-          className="w-fit px-4 py-2 bg-teal-600 text-white rounded-lg flex items-center gap-2 hover:bg-teal-700 transition font-medium text-base whitespace-nowrap"
+          className="hidden w-fit px-4 py-2 bg-teal-600 text-white rounded-lg md:flex items-center gap-2 hover:bg-teal-700 transition font-medium text-base whitespace-nowrap"
         >
           <Plus size={18} />
           Add Transaction
@@ -170,31 +174,39 @@ function Transactions() {
                   )}
                 </div>
               </div>
-              <div className="flex items-center gap-4 md:w-1/2 md:justify-end mt-2 md:mt-0">
+              <div className="flex items-center gap-4 md:w-1/2 md:justify-end mt-2 md:mt-0 flex-wrap md:flex-nowrap">
                 <span
-                  className={`font-bold text-base md:text-lg ${
+                  className={`font-bold text-base md:text-lg flex items-center gap-1 min-w-[100px] truncate ${
                     transaction.type === "expense"
                       ? "text-red-500"
                       : "text-green-600"
                   }`}
                 >
-                  {transaction.type === "expense" ? "-" : "+"}
-                  <IndianRupee size={18} className="inline-block mb-0.5" />
-                  {transaction.amount}
+                  <span>{transaction.type === "expense" ? "-" : "+"}</span>
+                  <CurrencyType
+                    baseCurrency={baseCurrency}
+                    iconSize="18"
+                    className="inline-block mb-0.5"
+                  />
+                  <span className="truncate">
+                    {convert(transaction.amount, transaction.currency)}
+                  </span>
                 </span>
+
                 <button
                   onClick={() => {
                     setEditingTransaction(transaction);
                     setOpen(true);
                   }}
-                  className="p-1 rounded hover:bg-gray-100 transition"
+                  className="p-1 rounded hover:bg-gray-100 transition shrink-0"
                   title="Edit"
                 >
                   <SquarePen size={20} />
                 </button>
+
                 <button
                   onClick={() => handleDeleteTransaction(transaction.id)}
-                  className="p-1 rounded hover:bg-red-50 transition"
+                  className="p-1 rounded hover:bg-red-50 transition shrink-0"
                   title="Delete"
                 >
                   <Trash2 size={20} className="text-red-600" />

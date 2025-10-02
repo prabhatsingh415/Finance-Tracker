@@ -8,6 +8,7 @@ const defaultTransactions = [
   {
     id: "1",
     type: "income",
+    currency: "INR",
     description: "Salary Deposite",
     amount: 5000,
     category: "Salary",
@@ -16,6 +17,7 @@ const defaultTransactions = [
   {
     id: "2",
     type: "expense",
+    currency: "INR",
     description: "Grocery Shopping",
     amount: 1200,
     category: "Food",
@@ -24,6 +26,7 @@ const defaultTransactions = [
   {
     id: "3",
     type: "expense",
+    currency: "INR",
     description: "Gas Station",
     amount: 1000,
     category: "Transportation",
@@ -32,6 +35,7 @@ const defaultTransactions = [
   {
     id: "4",
     type: "expense",
+    currency: "INR",
     description: "Movie Tickets",
     amount: 500,
     category: "Entertainment",
@@ -40,6 +44,7 @@ const defaultTransactions = [
   {
     id: "5",
     type: "income",
+    currency: "INR",
     description: "Freelance Work",
     amount: 800,
     category: "Freelance",
@@ -48,6 +53,7 @@ const defaultTransactions = [
   {
     id: "6",
     type: "expense",
+    currency: "INR",
     description: "Bought Course",
     amount: 600,
     category: "Education",

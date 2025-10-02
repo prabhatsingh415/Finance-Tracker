@@ -40,18 +40,21 @@ function Settings() {
   }, [enabled]);
 
   const currencyOptions = [
+    { value: "INR", label: "INR - Indian Rupee (₹)" },
     { value: "USD", label: "USD - US Dollar ($)" },
     { value: "EUR", label: "EUR - Euro (€)" },
     { value: "GBP", label: "GBP - British Pound (£)" },
     { value: "JPY", label: "JPY - Japanese Yen (¥)" },
     { value: "AUD", label: "AUD - Australian Dollar (A$)" },
-    { value: "CAD", label: "CAD - Canadian Dollar (C$)" },
   ];
   const baseCurrency = useSelector((state) => state.currency.base);
 
   const handleChange = (value) => {
+    console.log("Selected currency:" + value);
     dispatch(setBaseCurrency(value));
   };
+
+  console.log("Base Currency in Settings:", baseCurrency);
 
   const transactions = useSelector((state) => state.transaction.list);
 
@@ -141,21 +144,24 @@ function Settings() {
         </div>
       </div>
 
-      <div className="w-full flex flex-col gap-4 md:flex-row justify-between items-center border border-gray-300 rounded-2xl p-4">
-        <span className="flex justify-center items-center ml-4">
+      <div className="w-full flex flex-col md:flex-row justify-center items-center md:items-center md:justify-between border border-gray-300 rounded-2xl p-4 gap-4">
+        <span className="flex items-center text-base md:text-sm sm:text-xs ml-2">
           <span className="mr-2">
             <Globe />
           </span>
-          Curreny Settings
+          Currency Settings
         </span>
-
-        <Dropdown
-          label="Base Currency"
-          options={currencyOptions}
-          value={baseCurrency}
-          onChange={handleChange}
-          placeholder="INR - Indian Rupee (₹)"
-        />
+        <div className="w-full md:w-auto flex justify-end">
+          <Dropdown
+            label="Base Currency"
+            options={currencyOptions}
+            value={baseCurrency}
+            onChange={handleChange}
+            placeholder="Currency"
+            className="ml-8 md:ml-0"
+            showPlaceholder={false}
+          />
+        </div>
       </div>
 
       <div className="w-full flex flex-col items-start gap-4 border border-gray-300 rounded-2xl p-4">

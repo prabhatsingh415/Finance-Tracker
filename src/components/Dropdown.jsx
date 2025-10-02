@@ -6,9 +6,10 @@ export default function Dropdown({
   onChange,
   placeholder = "Select...",
   className = "",
+  showPlaceholder = true,
 }) {
   return (
-    <div className="`flex items-center gap-2 w-full ">
+    <div className="flex items-center gap-2 w-full">
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -16,7 +17,7 @@ export default function Dropdown({
           bg-white dark:bg-zinc-900 text-sm text-gray-700 dark:text-gray-200
           focus:outline-none focus:ring-2 focus:ring-blue-200 ${className}`}
       >
-        <option value="">{placeholder}</option>
+        {showPlaceholder && <option value="">{placeholder}</option>}
         {options.map((opt, idx) => {
           if (typeof opt === "string") {
             return (
