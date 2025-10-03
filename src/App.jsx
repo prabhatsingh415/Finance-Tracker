@@ -7,9 +7,11 @@ import BudgetGoals from "./pages/BudgetGoals.jsx";
 import Settings from "./pages/Settings.jsx";
 import { Plus } from "lucide-react";
 import ThemeLoader from "./components/themeLoader.jsx";
+import TransactionModal from "./components/TransactionModal.jsx"; // import reusable modal
 
 function App() {
   const [openTransactionModal, setOpenTransactionModal] = useState(false);
+  const [editingTransaction, setEditingTransaction] = useState(null);
 
   return (
     <div className="flex flex-col h-screen w-full bg-white dark:bg-[#000000] dark:text-white relative">
@@ -34,12 +36,23 @@ function App() {
 
       {/* Floating Add Button */}
       <button
-        onClick={() => setOpenTransactionModal(true)}
+        onClick={() => {
+          setEditingTransaction(null); // ensure it's adding new transaction
+          setOpenTransactionModal(true);
+        }}
         className="fixed bottom-6 right-6 md:bottom-8 md:right-8 p-4 md:p-5 bg-teal-600 hover:bg-teal-700 text-white rounded-full shadow-lg flex items-center justify-center z-50 transition"
         title="Add Transaction"
       >
         <Plus size={24} />
       </button>
+
+      {/* Transaction Modal (reusable for both add/edit) */}
+      <TransactionModal
+        open={openTransactionModal}
+        setOpen={setOpenTransactionModal}
+        editingTransaction={editingTransaction}
+        setEditingTransaction={setEditingTransaction}
+      />
     </div>
   );
 }
