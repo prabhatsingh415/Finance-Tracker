@@ -5,6 +5,7 @@ import { Target, Plus, AlertCircle, AlertTriangle } from "lucide-react";
 import Card from "../components/Card";
 import { addBudget, updateBudget, deleteBudget } from "../redux/budgetSlice";
 import Dropdown from "../components/Dropdown";
+import { useCurrencyConverter } from "../hooks/useCurrencyConverter";
 
 function BudgetGoals() {
   const categories = [
@@ -23,9 +24,27 @@ function BudgetGoals() {
   const budgets = useSelector((state) => state.budget);
   const baseCurrency = useSelector((state) => state.currency.base);
   const transactions = useSelector((state) => state.transaction.list);
+  const convert = useCurrencyConverter();
 
-  // Total budget
-  const totalBudget = budgets.reduce((sum, b) => sum + (b.budget || 0), 0);
+  // Function to get currency symbol dynamically
+  const getCurrencySymbol = (currency) => {
+    const symbols = {
+      USD: "$",
+      INR: "₹",
+      EUR: "€",
+      GBP: "£",
+      JPY: "¥",
+      AUD: "$",
+      CAD: "$",
+    };
+    return symbols[currency] || currency;
+  };
+
+  // Total budget converted to base currency
+  const totalBudget = budgets.reduce(
+    (sum, b) => sum + convert(b.budget || 0, b.currency || "INR"),
+    0
+  );
 
   const totalSpent = budgets.reduce((sum, b) => {
     const spentForCategory = transactions
@@ -34,7 +53,7 @@ function BudgetGoals() {
           t.type === "expense" &&
           t.category?.trim().toLowerCase() === b.category?.trim().toLowerCase()
       )
-      .reduce((s, t) => s + (t.amount || 0), 0);
+      .reduce((s, t) => s + convert(t.amount || 0, t.currency), 0);
     return sum + spentForCategory;
   }, 0);
 
@@ -42,7 +61,11 @@ function BudgetGoals() {
   const remaining = totalBudget - totalSpent;
 
   const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState({ category: "", budget: "" });
+  const [modalData, setModalData] = useState({
+    category: "",
+    budget: "",
+    currency: baseCurrency,
+  });
   const formRef = useRef(null);
 
   const handleAddBudget = (e) => {
@@ -55,6 +78,7 @@ function BudgetGoals() {
 
     const formData = new FormData(formRef.current);
     const budgetAmount = parseFloat(formData.get("budget"));
+    const currency = formData.get("currency");
 
     if (isNaN(budgetAmount) || budgetAmount <= 0) {
       alert("Please enter a valid budget amount");
@@ -64,6 +88,7 @@ function BudgetGoals() {
     const budget = {
       category: modalData.category,
       budget: budgetAmount,
+      currency,
     };
 
     if (budgets.some((b) => b.category === modalData.category)) {
@@ -74,7 +99,7 @@ function BudgetGoals() {
 
     setShowModal(false);
     formRef.current.reset();
-    setModalData({ category: "", budget: "" });
+    setModalData({ category: "", budget: "", currency: baseCurrency });
   };
 
   const handleDeleteBudget = (category) => {
@@ -93,7 +118,7 @@ function BudgetGoals() {
         </div>
         <button
           onClick={() => {
-            setModalData({ category: "", budget: "" });
+            setModalData({ category: "", budget: "", currency: baseCurrency });
             setShowModal(true);
           }}
           className="w-fit px-4 py-2 bg-teal-600 text-white rounded-lg flex items-center gap-2 hover:bg-teal-700 transition font-medium text-base whitespace-nowrap"
@@ -147,6 +172,25 @@ function BudgetGoals() {
                   defaultValue={modalData.budget}
                   className="w-full rounded-lg border border-gray-200 bg-gray-100 dark:bg-zinc-900 px-4 py-2 focus:outline-none text-base"
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Currency
+                </label>
+                <select
+                  name="currency"
+                  required
+                  defaultValue={modalData.currency}
+                  className="w-full rounded-lg border border-gray-200 bg-gray-50 dark:bg-zinc-900 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-200 text-base"
+                >
+                  <option value="USD">USD</option>
+                  <option value="INR">INR</option>
+                  <option value="EUR">EUR</option>
+                  <option value="GBP">GBP</option>
+                  <option value="JPY">JPY</option>
+                  <option value="AUD">AUD</option>
+                  <option value="CAD">CAD</option>
+                </select>
               </div>
               <div className="flex gap-4 mt-4">
                 <button
@@ -225,14 +269,14 @@ function BudgetGoals() {
               className="inline-block mr-0.5"
             />
             {remaining >= 0
-              ? `${baseCurrency} ${remaining.toLocaleString(undefined, {
+              ? `${remaining.toLocaleString(undefined, {
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 2,
                 })} remaining`
-              : `${baseCurrency} ${Math.abs(remaining).toLocaleString(
-                  undefined,
-                  { minimumFractionDigits: 0, maximumFractionDigits: 2 }
-                )} overspent`}
+              : `${Math.abs(remaining).toLocaleString(undefined, {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2,
+                })} overspent`}
           </span>
         </div>
       </div>
@@ -247,10 +291,12 @@ function BudgetGoals() {
                 t.category?.trim().toLowerCase() ===
                   b.category?.trim().toLowerCase()
             )
-            .reduce((sum, t) => sum + (t.amount || 0), 0);
+            .reduce((sum, t) => sum + convert(t.amount || 0, t.currency), 0);
 
-          const percentUsed = b.budget > 0 ? (spent / b.budget) * 100 : 0;
-          const remaining = b.budget - spent;
+          const budgetInBase = convert(b.budget || 0, b.currency || "INR");
+          const percentUsed =
+            budgetInBase > 0 ? (spent / budgetInBase) * 100 : 0;
+          const remaining = budgetInBase - spent;
 
           // Status logic
           let statusIcon, statusLabel;
@@ -272,12 +318,22 @@ function BudgetGoals() {
               key={b.category}
               category={b.category}
               spent={spent}
-              budget={b.budget}
+              budget={budgetInBase}
               percent={percentUsed}
               leftOrOverText={
                 remaining < 0
-                  ? `$${Math.abs(remaining)} over`
-                  : `$${remaining} left`
+                  ? `${getCurrencySymbol(baseCurrency)}${Math.abs(
+                      remaining
+                    ).toLocaleString(undefined, {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2,
+                    })} over`
+                  : `${getCurrencySymbol(
+                      baseCurrency
+                    )}${remaining.toLocaleString(undefined, {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2,
+                    })} left`
               }
               leftOrOverColor={
                 remaining < 0
@@ -301,7 +357,11 @@ function BudgetGoals() {
                 </div>
               }
               onEdit={() => {
-                setModalData({ category: b.category, budget: b.budget });
+                setModalData({
+                  category: b.category,
+                  budget: b.budget,
+                  currency: b.currency || "INR",
+                });
                 setShowModal(true);
               }}
               onDelete={() => handleDeleteBudget(b.category)}

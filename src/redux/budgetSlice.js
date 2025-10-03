@@ -3,9 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 // Load saved budgets from localStorage
 const savedBudgets = JSON.parse(localStorage.getItem("budgets"));
 
-// Initial state: use saved budgets or empty
+// Initial state: use saved budgets or empty, add currency if missing (assume INR for old)
 const initialBudgets =
-  savedBudgets && savedBudgets.length > 0 ? savedBudgets : [];
+  savedBudgets && savedBudgets.length > 0
+    ? savedBudgets.map((b) => ({ ...b, currency: b.currency || "INR" }))
+    : [];
+
+// Ensure localStorage always has initial budgets
+if (!savedBudgets || savedBudgets.length === 0) {
+  localStorage.setItem("budgets", JSON.stringify([]));
+}
 
 const budgetSlice = createSlice({
   name: "budget",
@@ -20,7 +27,7 @@ const budgetSlice = createSlice({
         (b) => b.category === action.payload.category
       );
       if (index !== -1) {
-        state[index].budget = action.payload.budget;
+        state[index] = { ...state[index], ...action.payload };
         localStorage.setItem("budgets", JSON.stringify(state));
       }
     },
