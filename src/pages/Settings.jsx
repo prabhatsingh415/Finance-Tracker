@@ -19,6 +19,7 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { clearTransactions } from "../redux/transactionalSlice";
 import Swal from "sweetalert2";
+import { clearBudgets } from "../redux/budgetSlice";
 
 function Settings() {
   const theme = useSelector((state) => state.theme.mode); // "light" or "dark"
@@ -92,6 +93,7 @@ function Settings() {
 
         // Clear Redux state
         dispatch(clearTransactions());
+        dispatch(clearBudgets());
 
         Swal.fire("Deleted!", "All your data has been deleted.", "success");
       }
