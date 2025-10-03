@@ -9,9 +9,13 @@ import {
 } from "../redux/transactionalSlice";
 import CurrencyType from "../components/CurrencyType";
 import { useCurrencyConverter } from "../hooks/useCurrencyConverter";
-import TransactionModal from "../components/TransactionModal";
 
-function Transactions({ open, setOpen }) {
+function Transactions({
+  open,
+  setOpen,
+  editingTransaction,
+  setEditingTransaction,
+}) {
   const baseCurrency = useSelector((state) => state.currency.base);
   const convert = useCurrencyConverter();
   const dispatch = useDispatch();
@@ -35,7 +39,6 @@ function Transactions({ open, setOpen }) {
   );
 
   const size = transactions.length;
-  const [editingTransaction, setEditingTransaction] = useState(null);
 
   const handleDeleteTransaction = (id) => {
     dispatch(deleteTransaction(id));
@@ -69,7 +72,6 @@ function Transactions({ open, setOpen }) {
 
   return (
     <div className="flex flex-col justify-center items-center bg-white dark:bg-[#000000] dark:text-white gap-10 p-4 md:p-8 w-full max-w-4xl mx-auto overflow-x-hidden">
-      {/* Header */}
       <div className="w-full flex flex-col sm:flex-row justify-between items-center gap-2 mb-2">
         <div className="w-full flex flex-col justify-start items-start">
           <h1 className="text-3xl font-semibold mb-1">Transactions</h1>
@@ -80,7 +82,7 @@ function Transactions({ open, setOpen }) {
         <button
           onClick={() => {
             setEditingTransaction(null);
-            setOpen(true);
+            setTimeout(() => setOpen(true), 0);
           }}
           className="hidden w-fit px-4 py-2 bg-teal-600 text-white rounded-lg md:flex items-center gap-2 hover:bg-teal-700 transition font-medium text-base whitespace-nowrap"
         >
@@ -89,7 +91,6 @@ function Transactions({ open, setOpen }) {
         </button>
       </div>
 
-      {/* Filters */}
       <div className="w-full flex flex-col items-start gap-4 border border-gray-300 rounded-2xl p-4">
         <span className="w-full flex items-center text-base font-semibold mb-1">
           <span className="mr-2">
@@ -130,7 +131,6 @@ function Transactions({ open, setOpen }) {
         </div>
       </div>
 
-      {/* Transactions List */}
       <div className="w-full flex justify-center">
         <div className="w-full max-w-md md:max-w-none flex flex-col gap-3 border border-gray-300 rounded-2xl p-4 bg-white dark:bg-[#000000]">
           <span className="font-semibold text-base mb-2 ml-1">
@@ -191,7 +191,7 @@ function Transactions({ open, setOpen }) {
                   <button
                     onClick={() => {
                       setEditingTransaction(transaction);
-                      setOpen(true);
+                      setTimeout(() => setOpen(true), 0);
                     }}
                     className="p-1 rounded hover:bg-gray-100 transition shrink-0"
                     title="Edit"
@@ -216,14 +216,6 @@ function Transactions({ open, setOpen }) {
           )}
         </div>
       </div>
-
-      {/* Reusable Modal Component */}
-      <TransactionModal
-        open={open}
-        setOpen={setOpen}
-        editingTransaction={editingTransaction}
-        setEditingTransaction={setEditingTransaction}
-      />
     </div>
   );
 }
