@@ -38,14 +38,14 @@ function SidePannel() {
 
   return (
     <>
-      <div className="md:hidden h-fit flex items-start p-4 dark:bg-[#000000] dark:text-white ">
+      <div className="md:hidden h-fit flex items-start p-4 dark:bg-[#000000]  dark:text-white ">
         <button onClick={() => setOpen(!open)}>
           <PanelLeft size={28} />
         </button>
       </div>
       <div
         className={`
-          fixed top-0 z-50 left-0 h-full w-60 p-6 bg-white dark:bg-[#000000] dark:text-white
+          fixed top-0 z-50 left-0 h-full w-60 p-6 bg-white dark:bg-[#000000] dark:text-white dark:border-r dark:border-white
           transform transition-transform duration-300 ease-in-out
           md:translate-x-0
           ${open ? "translate-x-0" : "-translate-x-full"}

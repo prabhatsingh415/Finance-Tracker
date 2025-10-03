@@ -78,7 +78,7 @@ function Transactions({ open, setOpen }) {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center bg-white dark:bg-[#000000] dark:text-white gap-10 p-4 border-white md:p-8 w-full max-w-4xl mx-auto dark:border-l overflow-x-hidden">
+    <div className="flex flex-col justify-center items-center bg-white dark:bg-[#000000] dark:text-white gap-10 p-4  md:p-8 w-full max-w-4xl mx-auto overflow-x-hidden">
       {/* Header */}
       <div className="w-full flex flex-col sm:flex-row justify-between items-center gap-2 mb-2">
         <div className="w-full flex flex-col justify-start items-start">
