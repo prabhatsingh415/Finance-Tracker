@@ -6,12 +6,14 @@ import Transactions from "./pages/Transactions.jsx";
 import BudgetGoals from "./pages/BudgetGoals.jsx";
 import Settings from "./pages/Settings.jsx";
 import { Plus } from "lucide-react";
+import ThemeLoader from "./components/themeLoader.jsx";
 
 function App() {
   const [openTransactionModal, setOpenTransactionModal] = useState(false);
 
   return (
     <div className="flex flex-col h-screen w-full bg-white dark:bg-[#000000] dark:text-white relative">
+      <ThemeLoader />
       <SidePannel />
       <div className="flex-1 p-6 md:ml-60">
         <Routes>

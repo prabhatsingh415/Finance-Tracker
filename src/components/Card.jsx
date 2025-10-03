@@ -16,7 +16,7 @@ export default function Card({
     <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-4 shadow-sm flex flex-col gap-3">
       <div className="flex justify-between items-center">
         <h3 className="font-semibold text-lg">{category}</h3>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 text-sm">
           {statusIcon} {statusLabel}
         </div>
       </div>

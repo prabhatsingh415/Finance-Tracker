@@ -133,7 +133,6 @@ function BudgetGoals() {
                     setModalData((prev) => ({ ...prev, category: value }))
                   }
                   placeholder="Select Category"
-                  showPlaceholder={false}
                 />
               </div>
               <div>
@@ -161,7 +160,9 @@ function BudgetGoals() {
                   type="submit"
                   className="flex-1 py-2 rounded-lg bg-teal-600 text-white hover:bg-teal-700 transition font-medium"
                 >
-                  {modalData.category ? "Update" : "Add"}
+                  {budgets.some((b) => b.category === modalData.category)
+                    ? "Edit Budget Goal"
+                    : "Add Budget Goal"}
                 </button>
               </div>
             </form>
@@ -253,7 +254,7 @@ function BudgetGoals() {
 
           // Status logic
           let statusIcon, statusLabel;
-          if (remaining < 0) {
+          if (remaining <= 0) {
             statusIcon = <AlertCircle size={18} className="text-red-600" />;
             statusLabel = "Over Budget";
           } else if (percentUsed >= 90) {

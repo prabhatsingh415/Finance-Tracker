@@ -9,7 +9,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleTheme } from "../redux/themeSlice";
+import { setTheme, toggleTheme } from "../redux/themeSlice";
 import { setBaseCurrency } from "../redux/currencySlice";
 import { Switch } from "@headlessui/react";
 import { useEffect } from "react";
@@ -127,7 +127,6 @@ function Settings() {
               enabled ? "bg-green-400" : "bg-gray-300"
             }`}
           >
-            <span className="sr-only">Toggle appearance</span>
             <span
               aria-hidden="true"
               className={`pointer-events-none inline-block h-4 w-4 md:h-6 md:w-6 transform rounded-full bg-white shadow ring-0 transition-transform duration-200 ${
@@ -151,7 +150,7 @@ function Settings() {
           </span>
           Currency Settings
         </span>
-        <div className="w-full md:w-auto flex justify-end">
+        <div className="w-full mr-16 md:mr-0 md:w-auto flex justify-end">
           <Dropdown
             label="Base Currency"
             options={currencyOptions}

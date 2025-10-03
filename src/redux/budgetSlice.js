@@ -1,28 +1,42 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [{ category: "food & dining", budget: 1400 }];
+// Load saved budgets from localStorage
+const savedBudgets = JSON.parse(localStorage.getItem("budgets"));
+
+// Initial state: use saved budgets or empty
+const initialBudgets =
+  savedBudgets && savedBudgets.length > 0 ? savedBudgets : [];
 
 const budgetSlice = createSlice({
   name: "budget",
-  initialState,
+  initialState: initialBudgets,
   reducers: {
     addBudget: (state, action) => {
       state.push(action.payload);
+      localStorage.setItem("budgets", JSON.stringify(state));
     },
     updateBudget: (state, action) => {
-      const budgetItem = state.find(
-        (t) => t.category === action.payload.category
+      const index = state.findIndex(
+        (b) => b.category === action.payload.category
       );
-      if (budgetItem) {
-        budgetItem.budget = action.payload.budget;
+      if (index !== -1) {
+        state[index].budget = action.payload.budget;
+        localStorage.setItem("budgets", JSON.stringify(state));
       }
     },
     deleteBudget: (state, action) => {
-      return state.filter((t) => t.category !== action.payload);
+      const newState = state.filter((b) => b.category !== action.payload);
+      localStorage.setItem("budgets", JSON.stringify(newState));
+      return newState;
+    },
+    clearBudgets: () => {
+      localStorage.removeItem("budgets");
+      return [];
     },
   },
 });
 
-export const { addBudget, updateBudget, deleteBudget } = budgetSlice.actions;
+export const { addBudget, updateBudget, deleteBudget, clearBudgets } =
+  budgetSlice.actions;
 
 export default budgetSlice.reducer;

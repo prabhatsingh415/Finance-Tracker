@@ -137,14 +137,14 @@ function Transactions({ open, setOpen }) {
 
       {/* Transactions List */}
       <div className="w-full flex justify-center">
-        <div className="w-full max-w-md md:max-w-none flex flex-col gap-3 border border-gray-300 rounded-2xl p-4 bg-white dark:bg-[#18181b]">
+        <div className="w-full max-w-md md:max-w-none flex flex-col gap-3 border border-gray-300 rounded-2xl p-4 bg-white dark:bg-[#000000]">
           <span className="font-semibold text-base mb-2 ml-1">
             Transactions ({size})
           </span>
           {sortedTransactions.map((transaction) => (
             <div
               key={transaction.id}
-              className="w-full flex flex-col md:flex-row md:items-center justify-between gap-2 p-3 md:p-4 rounded-xl bg-[#f5f5f7] dark:bg-zinc-900 shadow-sm border border-gray-200"
+              className="w-full flex flex-col md:flex-row md:items-center justify-between gap-2 p-3 md:p-4 rounded-xl bg-[#f5f5f7] dark:bg-[#000000] shadow-sm border border-gray-200"
             >
               <div className="flex items-center gap-3 min-w-0 md:w-1/2">
                 <span
@@ -279,7 +279,7 @@ function Transactions({ open, setOpen }) {
                   <select
                     name="currency"
                     required
-                    defaultValue={editingTransaction?.currency || "USD"}
+                    defaultValue={editingTransaction?.currency || "INR"}
                     className="w-full rounded-lg border border-gray-200 bg-gray-50 dark:bg-zinc-900 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-200 text-base"
                   >
                     <option value="USD">USD</option>
